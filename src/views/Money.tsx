@@ -5,6 +5,11 @@ import styled from "styled-components"
 const SectionTags = styled.section`
  background: #fff;
  padding: 12px 16px;
+ display: flex;
+ flex-direction: column;
+ flex-grow: 1;
+ justify-content: flex-end;
+ align-items: flex-start;
  > ul {
    margin: 0 -8px;
     > li {
@@ -62,16 +67,48 @@ const SectionCategory = styled.section`
         background: #333;
       }
     }
-  }
  }
 `
 
 const NumberSection = styled.section`
- 
+  display: flex;
+  flex-direction: column;
+  > .output {
+    background: #fff;
+    font-size: 32px;
+    line-height: 72px;
+    text-align: right;
+    padding: 0 16px;
+    box-shadow: inset 0 -4px 4px -4px rgba(0,0,0,.25), 
+                inset 0 4px 4px -4px rgba(0,0,0,.25)
+    ;
+  }
+  > .pad {
+    > button {
+      width: 25%;
+      height: 64px;
+      float: left;
+      border: none;
+      border: 1px solid #ddd;
+      &.ok {
+        float: right;
+        height: 128px;
+      }
+      &.zero {
+        width: 50%;
+      }
+    }
+  }
 `
+
+const MyLayout = styled(Layout)`
+  display: flex;
+  flex-direction: column;
+`
+
 function Money() {
   return (
-    <Layout>
+    <MyLayout>
       <SectionTags>
         <ul>
           <li>衣</li>
@@ -84,7 +121,7 @@ function Money() {
       <SectionNotes>
         <label>
           <span>备注</span>
-          <input type="text" placeholder="请在此添加备注" />
+          <input type="text" placeholder="请在此添加备注"/>
         </label>
       </SectionNotes>
       <SectionCategory>
@@ -94,8 +131,8 @@ function Money() {
         </ul>
       </SectionCategory>
       <NumberSection>
-        <div>100</div>
-        <div>
+        <div className="output">100</div>
+        <div className="pad clearFix">
           <button>1</button>
           <button>2</button>
           <button>3</button>
@@ -107,12 +144,12 @@ function Money() {
           <button>7</button>
           <button>8</button>
           <button>9</button>
-          <button>OK</button>
-          <button>0</button>
+          <button className="ok">OK</button>
+          <button className='zero'>0</button>
           <button>.</button>
         </div>
       </NumberSection>
-    </Layout>
+    </MyLayout>
   )
 }
 

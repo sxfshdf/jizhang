@@ -32,3 +32,8 @@ button {
   width: 1em;
   display: inline-block;
 }
+.clearFix:after {
+  content: '';
+  display: block;
+  clear: both
+}
