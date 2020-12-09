@@ -1,6 +1,7 @@
 import styled from "styled-components"
+import React from "react"
 
-const SectionCategory = styled.section`
+const Wrapper = styled.section`
  > ul {
   display: flex;
   > li {
@@ -22,5 +23,16 @@ const SectionCategory = styled.section`
     }
  }
 `
+const SectionCategory: React.FC = () => {
+  return (
+    <Wrapper>
+      <ul>
+        <li className="selected">收入</li>
+        <li>支出</li>
+      </ul>
+    </Wrapper>
+  )
+}
+
 
 export {SectionCategory}
