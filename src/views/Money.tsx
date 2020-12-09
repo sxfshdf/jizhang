@@ -13,7 +13,6 @@ const SectionTags = styled.section`
       border-radius: 2px;
       padding: 4px 16px;
       margin: 0 8px;
-      font-size: 14px;
     }
  }
  button {
@@ -27,7 +26,20 @@ const SectionTags = styled.section`
 `
 
 const SectionNotes = styled.section`
- 
+  padding: 0 16px;
+  label {
+    display: flex;
+    align-items: center;
+    span {
+      margin-right: 8px;
+    }
+    input {
+      flex-grow: 1;
+      height: 72px;
+      border: none;
+      background: none;
+    }
+  }
 `
 
 const SectionCategory = styled.section`
@@ -50,8 +62,10 @@ function Money() {
         <button>新增标签</button>
       </SectionTags>
       <SectionNotes>
-        <label>备注</label>
-        <input type="text"/>
+        <label>
+          <span>备注</span>
+          <input type="text" placeholder="请在此添加备注" />
+        </label>
       </SectionNotes>
       <SectionCategory>
         <ul>
