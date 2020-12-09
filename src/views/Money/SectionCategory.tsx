@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React from "react"
+import React, {useState} from "react"
 
 const Wrapper = styled.section`
  > ul {
@@ -24,11 +24,21 @@ const Wrapper = styled.section`
  }
 `
 const SectionCategory: React.FC = () => {
+  const categoryMap = {'+': '收入',  '-': '支出'}
+  // type X = typeof categoryMap
+  // type Y = keyof X
+  type Keys = keyof typeof categoryMap
+  const [category, setCategory] = useState<string>('+')
+  const [categoryList] = useState<Keys[]>(['+', '-'])
   return (
     <Wrapper>
       <ul>
-        <li className="selected">收入</li>
-        <li>支出</li>
+        {categoryList.map(c =>
+          <li className={category === c ? 'selected' : ''}
+              key={c}
+              onClick={() => setCategory(c)}
+          >{categoryMap[c]}</li>
+        )}
       </ul>
     </Wrapper>
   )
