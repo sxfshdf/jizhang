@@ -5,6 +5,8 @@ import Layout from "components/Layout"
 import Icon from "components/Icon"
 import {Button} from "components/Button"
 import styled from "styled-components"
+import {InputItem} from "components/InputItem"
+import {CenterBox} from "components/CenterBox"
 
 const TopBar = styled.header`
   background: #fff;
@@ -21,6 +23,11 @@ const TopBar = styled.header`
     width: 20px;
   }
 `
+const InputWrapper = styled.section`
+  background: #fff;
+  padding: 0 16px;
+  margin-top: 16px;
+`
 const TagDetail: React.FC = () => {
   const {findTag} = useTags()
   const {id} = useParams()
@@ -32,13 +39,12 @@ const TagDetail: React.FC = () => {
         <span>编辑标签</span>
         <Icon />
       </TopBar>
-      <div>
-        <label>
-          <span>标签名</span>
-          <input type="text" placeholder="标签名"/>
-        </label>
-      </div>
-      <Button>删除标签</Button>
+      <InputWrapper>
+        <InputItem label='标签名' placeholder="输入标签名" value={tag.name}/>
+      </InputWrapper>
+      <CenterBox>
+        <Button>删除标签</Button>
+      </CenterBox>
     </Layout>
   )
 }

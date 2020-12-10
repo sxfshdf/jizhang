@@ -5,6 +5,7 @@ import styled from "styled-components"
 import Icon from "../components/Icon"
 import {Link} from "react-router-dom"
 import {Button} from "components/Button"
+import {CenterBox} from "components/CenterBox"
 
 const TagList = styled.ul`
   font-size: 16px;
@@ -24,13 +25,7 @@ const TagList = styled.ul`
     }
   }
 `
-const CenterBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 24px 0;
-`
+
 function Tags() {
   const {tags} = useTags()
   return (
