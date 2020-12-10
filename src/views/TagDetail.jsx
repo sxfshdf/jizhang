@@ -29,22 +29,34 @@ const InputWrapper = styled.section`
   margin-top: 16px;
 `
 const TagDetail: React.FC = () => {
-  const {findTag} = useTags()
+  const {findTag, updateTag, deleteTag} = useTags()
   const {id} = useParams()
   const tag = findTag(parseInt(id))
   return (
     <Layout>
       <TopBar>
-        <Icon name="arrow-left"/>
+        <Icon name="arrow-left" onClick={() => {
+          window.history.back()
+        }}/>
         <span>编辑标签</span>
         <Icon />
       </TopBar>
-      <InputWrapper>
-        <InputItem label='标签名' placeholder="输入标签名" value={tag.name}/>
-      </InputWrapper>
-      <CenterBox>
-        <Button>删除标签</Button>
-      </CenterBox>
+      {tag ? (
+        <>
+          <InputWrapper>
+            <InputItem label='标签名' placeholder="输入标签名" value={tag.name}
+                       onChange={(e) => {
+                         updateTag(tag.id, e.target.value)
+                       }}/>
+          </InputWrapper>
+          <CenterBox>
+            <Button onClick={() => {
+              deleteTag(tag.id)
+              // window.history.back()
+            }}>删除标签</Button>
+          </CenterBox>
+        </>) : null}
+
     </Layout>
   )
 }

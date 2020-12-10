@@ -10,12 +10,13 @@ try {
 }
 
 type Props = {
-  name?: string
+  name?: string,
+  onClick: () => void
 }
 
 const Icon = (props: Props) => {
   return (
-    <svg className="icon">
+    <svg className="icon" onClick={props.onClick}>
       {props.name && <use xlinkHref={'#' + props.name} />}
     </svg>
   )
