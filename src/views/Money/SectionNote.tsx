@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import React, {useRef} from "react"
+import React, {ChangeEventHandler} from "react"
+import {InputItem} from "components/InputItem"
 
 const Wrapper = styled.section`
   padding: 0 16px;
@@ -23,24 +24,15 @@ type Props = {
 }
 
 const SectionNote: React.FC<Props> = (props) => {
-  // const [note, setNote] = useState<string>('')
   const note = props.value
-  const refInput = useRef<HTMLInputElement>(null)
-  const onBlur = () => {
-    if (refInput.current !== null) {
-      props.onChange(refInput.current.value)
-    }
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    props.onChange(e.target.value)
   }
   return (
     <Wrapper>
-      <label>
-        <span>备注</span>
-        <input type="text" placeholder="请在此添加备注"
-               ref={refInput}
-               defaultValue={note}
-               onBlur={onBlur}
-        />
-      </label>
+      <InputItem label="备注" type="text" placeholder="请在此添加备注"
+                 value={note}
+                 onChange={onChange}/>
     </Wrapper>
   )
 }
