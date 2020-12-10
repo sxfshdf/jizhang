@@ -39,14 +39,14 @@ const CenterBox = styled.div`
   margin: 24px 0;
 `
 function Tags() {
-  const {tags, setTags} = useTags()
+  const {tags} = useTags()
   return (
     <Layout>
       <TagList>
         {tags.map(tag =>
-          <li key={tag}>
-            <Link to={'/tags/' + tag}>
-              <span className="one-line">{tag}</span>
+          <li key={tag.id}>
+            <Link to={'/tags/' + tag.name}>
+              <span className="one-line">{tag.name}</span>
               <Icon name="arrow-right" />
             </Link>
           </li>

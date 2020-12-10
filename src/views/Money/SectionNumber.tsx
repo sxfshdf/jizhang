@@ -37,7 +37,6 @@ type Props = {
   onOk?: () => void
 }
 const SectionNumber: React.FC<Props> = (props) => {
-  // const [output, _setOutput] = useState<string>('0')
   const output = props.value.toString()
   const setOutput = (output: string) => {
     let value
