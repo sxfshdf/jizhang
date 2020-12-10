@@ -3,20 +3,23 @@ import React from "react"
 import {useTags} from "useTags"
 import styled from "styled-components"
 import Icon from "../components/Icon"
+import {Link} from "react-router-dom"
 
 const TagList = styled.ul`
   font-size: 16px;
   background: #fff;
   > li {
     border-bottom: 1px solid #ddd;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    > .icon {
+    > a {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      > .icon {
        height: 20px;
        width: 20px;
        flex-shrink: 0;
+    }
     }
   }
 `
@@ -42,8 +45,10 @@ function Tags() {
       <TagList>
         {tags.map(tag =>
           <li key={tag}>
-            <span className="one-line">{tag}</span>
-            <Icon name="arrow-right" />
+            <Link to={'/tags/' + tag}>
+              <span className="one-line">{tag}</span>
+              <Icon name="arrow-right" />
+            </Link>
           </li>
         )}
       </TagList>
