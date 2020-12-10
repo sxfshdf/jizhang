@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import React from "react"
 import {useTags} from "../../useTags"
+import {createId} from "../../lib/create"
 
 const Wrapper = styled.section`
  background: #fff;
@@ -46,7 +47,7 @@ const SectionTags: React.FC<Props> = (props) => {
     if (tagName !== null) {
       tagName = tagName.replace(/(^\s*)|(\s*$)/g, '')
       if (tagName !== '') {
-        setTags([...tags, {id: Math.random(), name: tagName}])
+        setTags([...tags, {id: createId(), name: tagName}])
       }
     }
   }
