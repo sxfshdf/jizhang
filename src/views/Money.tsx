@@ -1,5 +1,5 @@
 import Layout from "../components/Layout"
-import React from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 import {SectionTags} from "./Money/SectionTags"
 import {SectionNote} from "./Money/SectionNote"
@@ -12,12 +12,36 @@ const MyLayout = styled(Layout)`
 `
 
 function Money() {
+  const [selected, setSelected] = useState({
+    tags: [] as (string[]),
+    note: '',
+    category: '-' as ('+' | '-'),
+    amount: 0
+  })
+  const onChange = (obj: Partial<typeof selected>) => {
+    setSelected({
+      ...selected,
+      ...obj
+    })
+  }
   return (
     <MyLayout>
-      <SectionTags />
-      <SectionNote />
-      <SectionCategory />
-      <SectionNumber />
+      {selected.tags.join(',')}
+      <hr/>
+      {selected.note}
+      <hr/>
+      {selected.category}
+      <hr/>
+      {selected.amount}
+      <SectionTags value={selected.tags}
+                   onChange={(tags => onChange({tags}))}/>
+      <SectionNote value={selected.note}
+                   onChange={(note) => onChange({note})}/>
+      <SectionCategory value={selected.category}
+                       onChange={(category) => onChange({category})}/>
+      <SectionNumber value={selected.amount}
+                     onOk = {() => {}}
+                     onChange={(amount) => onChange({amount})}/>
     </MyLayout>
   )
 }

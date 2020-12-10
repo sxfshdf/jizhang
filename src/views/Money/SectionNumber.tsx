@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, {useState} from "react"
+import React from "react"
 import {calculateOutput} from "./sectionNumber/calculateOutput"
 
 const Wrapper = styled.section`
@@ -31,21 +31,32 @@ const Wrapper = styled.section`
     }
   }
 `
-const SectionNumber: React.FC = () => {
-  const [output, _setOutput] = useState<string>('0')
+type Props = {
+  value: number,
+  onChange: (amount: number) => void,
+  onOk?: () => void
+}
+const SectionNumber: React.FC<Props> = (props) => {
+  // const [output, _setOutput] = useState<string>('0')
+  const output = props.value.toString()
   const setOutput = (output: string) => {
+    let value
     if (output.length > 16) {
-      output = output.slice(0, 16)
+      value = parseFloat(output.slice(0, 16))
     } else if (output.length === 0) {
-      output = '0'
+      value = 0
+    } else {
+      value = parseFloat(output)
     }
-    _setOutput(output)
+    props.onChange(value)
   }
   const onClickButtonWrapper = (e: React.MouseEvent) => {
     const text = (e.target as HTMLButtonElement).textContent
     if (text === null) return
     if (text === 'OK') {
-      console.log('提交')
+      if (props.onOk) {
+        props.onOk()
+      }
       return
     }
     if ('1234567890.'.split('').concat(['删除', '清空']).indexOf(text) > -1) {
