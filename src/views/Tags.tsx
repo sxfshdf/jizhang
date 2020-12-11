@@ -27,21 +27,21 @@ const TagList = styled.ul`
 `
 
 function Tags() {
-  const {tags} = useTags()
+  const {tags, addTag} = useTags()
   return (
     <Layout>
       <TagList>
         {tags.map(tag =>
           <li key={tag.id}>
             <Link to={'/tags/' + tag.id}>
-              <span className="one-line">{tag.name}</span>
+              <span className="one-line">{tag.id}: {tag.name}</span>
               <Icon name="arrow-right" />
             </Link>
           </li>
         )}
       </TagList>
       <CenterBox>
-        <Button>新增标签</Button>
+        <Button onClick={addTag}>新增标签</Button>
       </CenterBox>
     </Layout>
   )

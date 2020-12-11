@@ -29,7 +29,7 @@ const InputWrapper = styled.section`
   margin-top: 16px;
 `
 const TagDetail: React.FC = () => {
-  const {findTag, updateTag, deleteTag} = useTags()
+  const {findTag, updateTag, deleteTag, addTag} = useTags()
   const history = useHistory()
   const {id} = useParams()
   const tag = findTag(parseInt(id))
