@@ -1,4 +1,5 @@
 import React from "react"
+import classNames from "classnames"
 
 // require 一个文件目录
 // __WebpackModuleApi.RequireContext 安装 @types/webpack-env
@@ -11,12 +12,12 @@ try {
 
 type Props = {
   name?: string,
-  onClick: () => void
-}
+} & React.SVGAttributes<SVGElement>
 
 const Icon = (props: Props) => {
+  const {name, children, className, ...rest} = props
   return (
-    <svg className="icon" onClick={props.onClick}>
+    <svg className={classNames('icon', className)} {...rest} >
       {props.name && <use xlinkHref={'#' + props.name} />}
     </svg>
   )
