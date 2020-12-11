@@ -32,8 +32,8 @@ const Wrapper = styled.section`
   }
 `
 type Props = {
-  value: number,
-  onChange: (amount: number) => void,
+  value: string,
+  onChange: (amount: string) => void,
   onOk?: () => void
 }
 const SectionNumber: React.FC<Props> = (props) => {
@@ -41,11 +41,11 @@ const SectionNumber: React.FC<Props> = (props) => {
   const setOutput = (output: string) => {
     let value
     if (output.length > 16) {
-      value = parseFloat(output.slice(0, 16))
+      value = output.slice(0, 16)
     } else if (output.length === 0) {
-      value = 0
+      value = '0'
     } else {
-      value = parseFloat(output)
+      value = output
     }
     props.onChange(value)
   }

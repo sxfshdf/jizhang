@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import React from "react"
-import {useTags} from "../../useTags"
+import {useTags} from "../../hooks/useTags"
 
 const Wrapper = styled.section`
  background: #fff;
@@ -17,7 +17,7 @@ const Wrapper = styled.section`
       display: inline-block;
       border-radius: 2px;
       padding: 4px 16px;
-      margin: 0 8px;
+      margin: 4px 8px;
       &.selected {
         background: #666;
         color: #fff;

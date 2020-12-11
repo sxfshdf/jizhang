@@ -1,5 +1,5 @@
 import React from "react"
-import {useTags} from "useTags"
+import {useTags} from "hooks/useTags"
 import {useParams, useHistory} from 'react-router-dom'
 import Layout from "components/Layout"
 import Icon from "components/Icon"
@@ -29,7 +29,7 @@ const InputWrapper = styled.section`
   margin-top: 16px;
 `
 const TagDetail: React.FC = () => {
-  const {findTag, updateTag, deleteTag, addTag} = useTags()
+  const {findTag, updateTag, deleteTag} = useTags()
   const history = useHistory()
   const {id} = useParams()
   const tag = findTag(parseInt(id))
