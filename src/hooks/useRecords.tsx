@@ -8,7 +8,7 @@ type NewRecordItem = {
   amount: number,
 }
 
-type RecordItem = NewRecordItem & {
+export type RecordItem = NewRecordItem & {
   createAt: string
 }
 const useRecords = () => {
@@ -21,7 +21,7 @@ const useRecords = () => {
 
   useUpdate(() => {
     window.localStorage.setItem('records', JSON.stringify(records))
-  }, [records])
+  }, records)
 
   const addRecords = (record: NewRecordItem) => {
     if (record.tagIds.length === 0) {

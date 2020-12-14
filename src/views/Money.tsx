@@ -4,12 +4,15 @@ import styled from "styled-components"
 import {SectionTags} from "./Money/SectionTags"
 import {SectionNote} from "./Money/SectionNote"
 import {SectionNumber} from "./Money/SectionNumber"
-import {SectionCategory} from "./Money/SectionCategory"
+import {CategorySelector} from "components/CategorySelector"
 import {useRecords} from "../hooks/useRecords"
 
 const MyLayout = styled(Layout)`
   display: flex;
   flex-direction: column;
+`
+const CategoryWrapper = styled.div`
+  background: #ddd;
 `
 const defaultSelected = {
   tagIds: [] as (number[]),
@@ -17,6 +20,7 @@ const defaultSelected = {
   category: '-' as ('+' | '-'),
   amount: '0'
 }
+
 function Money() {
   const [selected, setSelected] = useState(defaultSelected)
   const {addRecords} = useRecords()
@@ -40,11 +44,13 @@ function Money() {
                    onChange={(tagIds => onChange({tagIds}))}/>
       <SectionNote value={selected.note}
                    onChange={(note) => onChange({note})}/>
-      <SectionCategory value={selected.category}
-                       onChange={(category) => onChange({category})}/>
+      <CategoryWrapper>
+        <CategorySelector value={selected.category}
+                          onChange={(category) => onChange({category})}/>
+      </CategoryWrapper>
       <SectionNumber value={selected.amount}
-                     onOk = {addRecord}
-                     onChange={(amount:string) => onChange({amount})}/>
+                     onOk={addRecord}
+                     onChange={(amount: string) => onChange({amount})}/>
     </MyLayout>
   )
 }
