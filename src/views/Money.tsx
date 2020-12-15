@@ -6,6 +6,7 @@ import {SectionNote} from "./Money/SectionNote"
 import {SectionNumber} from "./Money/SectionNumber"
 import {CategorySelector} from "components/CategorySelector"
 import {useRecords} from "../hooks/useRecords"
+import {X} from 'components/X'
 
 const MyLayout = styled(Layout)`
   display: flex;
@@ -40,6 +41,11 @@ function Money() {
   }
   return (
     <MyLayout>
+      <X visible={false} onClose={() => console.log('close')} onConfirm={() => console.log('confirm')}>
+        <div>
+          Content
+        </div>
+      </X>
       <SectionTags value={selected.tagIds}
                    onChange={(tagIds => onChange({tagIds}))}/>
       <SectionNote value={selected.note}

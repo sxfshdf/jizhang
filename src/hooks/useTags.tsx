@@ -27,6 +27,7 @@ const useTags = () => {
   }
   const deleteTag = (id: number) => {
     setTags(tags.filter(tag => tag.id !== id))
+    window.alert('删除成功')
   }
   const addTag = () => {
     let tagName = window.prompt('请输入新标签的名称')

@@ -47,7 +47,7 @@ const SectionTags: React.FC<Props> = (props) => {
       props.onChange(selectedTagIds.filter(t => t !== tagId))
     } else {
       // tag不存在就添加
-      props.onChange([...selectedTagIds, tagId])
+      props.onChange([tagId])
     }
   }
   return (
