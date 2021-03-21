@@ -4,6 +4,7 @@ import styled from "styled-components"
 const Label = styled.label`
     display: flex;
     align-items: center;
+    flex: 1;
     > span {
       margin-right: 8px;
     }
@@ -15,14 +16,14 @@ const Label = styled.label`
   }
 `
 type Props = {
-  label: string,
+  label?: string,
 } & React.InputHTMLAttributes<HTMLInputElement>
 
 const InputItem: React.FC<Props> = (props) => {
   const {label, children, ...rest} = props
   return (
     <Label>
-      <span>{props.label}</span>
+      {label === undefined ? null : <span>{label}</span>}
       <input {...rest} />
     </Label>
   )

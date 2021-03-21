@@ -1,53 +1,54 @@
-import {useEffect, useState} from "react"
-import {createId} from "../lib/create"
-import {useUpdate} from "./useUpdate"
+import {useEffect, useState} from "react";
+import {createId} from "../lib/create";
+import {useUpdate} from "./useUpdate";
 
 const useTags = () => {
-  const [tags, setTags] = useState<{ id: number, name: string }[]>([])
+  const [tags, setTags] = useState<{ id: number, name: string }[]>([]);
   useEffect(() => {
-    let localTags = JSON.parse(window.localStorage.getItem('tags') || '[]')
+    let localTags = JSON.parse(window.localStorage.getItem('tags') || '[]');
     if (localTags.length === 0) {
       localTags = [
         {id: createId(), name: '衣'},
         {id: createId(), name: '食'},
         {id: createId(), name: '住'},
         {id: createId(), name: '行'}
-      ]
+      ];
     }
-    setTags(localTags)
-  }, [])
+    setTags(localTags);
+  }, []);
   useUpdate(() => {
-    window.localStorage.setItem('tags', JSON.stringify(tags))
-  }, tags)
-  const findTag =(id: number) => tags.filter(tag => tag.id === id)[0]
+    window.localStorage.setItem('tags', JSON.stringify(tags));
+  }, tags);
+  const findTag = (id: number) => tags.filter(tag => tag.id === id)[0];
   const updateTag = (id: number, name: string) => {
     setTags(tags.map(tag => {
-      return tag.id === id ? {id, name} : tag
-    }))
-  }
+      return tag.id === id ? {id, name} : tag;
+    }));
+  };
   const deleteTag = (id: number) => {
-    setTags(tags.filter(tag => tag.id !== id))
-    window.alert('删除成功')
-  }
+    setTags(tags.filter(tag => tag.id !== id));
+    window.alert('删除成功');
+  };
   const addTag = () => {
-    let tagName = window.prompt('请输入新标签的名称')
+    let tagName = window.prompt('请输入新标签的名称');
     if (tagName !== null) {
-      tagName = tagName.replace(/(^\s*)|(\s*$)/g, '')
+      tagName = tagName.replace(/(^\s*)|(\s*$)/g, '');
       if (tagName !== '') {
-        setTags([...tags, {id: createId(), name: tagName}])
+        setTags([...tags, {id: createId(), name: tagName}]);
       }
     }
-  }
+  };
   const getTagNames = (ids: number[]) => {
-    let names: string[] = []
-    if (ids.length === 0) return ''
+    let names: string[] = [];
+    if (ids.length === 0) return '';
     ids.forEach(id => {
-      const tag = tags.filter(tag => tag.id === id)[0]
-      names.push(tag.name)
-    })
-    return names.join(' , ')
-  }
-  return {tags, setTags, findTag, updateTag, deleteTag, addTag, getTagNames}
-}
+      const tag = tags.filter(tag => tag.id === id)[0];
+      if (tag === undefined) return;
+      names.push(tag.name);
+    });
+    return names.join(' , ');
+  };
+  return {tags, setTags, findTag, updateTag, deleteTag, addTag, getTagNames};
+};
 
-export {useTags}
+export {useTags};

@@ -16,13 +16,13 @@ const calculateOutput = (text: string, output = '0') => {
       } else {
         return output + text
       }
-    case '删除':
+    case 'Delete':
       if (output.length === 1) {
         return '0'
       } else {
         return output.slice(0, -1) || '0'
       }
-    case '清空':
+    case 'Clear':
       return '0'
     case '.':
       if (output.indexOf('.') > -1) {

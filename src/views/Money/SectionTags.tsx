@@ -1,55 +1,70 @@
-import styled from "styled-components"
-import React from "react"
-import {useTags} from "../../hooks/useTags"
+import styled from "styled-components";
+import React from "react";
+import Icon from  '../../components/Icon'
+import {useTags} from "../../hooks/useTags";
+import Variables from '../../variables';
 
 const Wrapper = styled.section`
- background: #fff;
- padding: 12px 16px;
- display: flex;
- flex-direction: column;
- flex-grow: 1;
- justify-content: flex-end;
- align-items: flex-start;
- > ul {
-   margin: 0 -8px;
+  background: #fff;
+  padding: 12px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: flex-start;
+
+  > ul {
+    margin: 0 -8px;
+    overflow: auto;
+
     > li {
-      background: #ddd;
+      background: #fff;
+      color: ${Variables.$lightGrey};
+      box-shadow: 0 1px 4px rgba(0,0,0,.1);
       display: inline-block;
-      border-radius: 2px;
-      padding: 4px 16px;
-      margin: 4px 8px;
+      border-radius: 16px;
+      padding: 6px 16px;
+      margin: 6px 8px;
+
       &.selected {
-        background: #666;
+        background: ${Variables.$blue};
         color: #fff;
       }
     }
- }
- button {
-  background: none;
-  border: none;
-  border-bottom: 1px solid #888;
-  padding: 2px 6px;
-  color: #666;
-  margin-top: 12px;
- }
-`
+  }
+
+  button {
+    background: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 4px 10px;
+    color: ${Variables.$blue};
+    margin: 10px auto 0;
+    .icon {
+      fill: ${Variables.$blue};
+      height: 14px;
+      width: 14px;
+      margin-right: 2px;
+    }
+  }
+`;
 type Props = {
   value: number[],
   onChange: (selected: number[]) => void
 }
 const SectionTags: React.FC<Props> = (props) => {
-  const {tags, addTag} = useTags()
-  const selectedTagIds = props.value
+  const {tags, addTag} = useTags();
+  const selectedTagIds = props.value;
   const onToggleTag = (tagId: number) => {
-    let index = selectedTagIds.indexOf(tagId)
+    let index = selectedTagIds.indexOf(tagId);
     if (index > -1) {
       // tag已经选择则移除
-      props.onChange(selectedTagIds.filter(t => t !== tagId))
+      props.onChange(selectedTagIds.filter(t => t !== tagId));
     } else {
       // tag不存在就添加
-      props.onChange([tagId])
+      props.onChange([...selectedTagIds, tagId]);
     }
-  }
+  };
   return (
     <Wrapper>
       <ul>
@@ -59,9 +74,9 @@ const SectionTags: React.FC<Props> = (props) => {
               key={tag.id}>{tag.name}</li>
         )}
       </ul>
-      <button onClick={addTag}>新增标签</button>
+      <button onClick={addTag}><Icon name='add' />新增标签</button>
     </Wrapper>
-  )
-}
+  );
+};
 
-export {SectionTags}
+export {SectionTags};

@@ -1,5 +1,6 @@
 import Nav from "./Nav"
-import React from "react"
+import Header from './Header'
+import React from "react";
 import styled from "styled-components"
 
 const Wrapper = styled.div`
@@ -20,6 +21,7 @@ const Main = styled.div`
 const Layout = (props: any) => {
   return (
     <Wrapper>
+      <Header title={props.title} category={props.category} />
       <Main className={props.className}>
         {props.children}
       </Main>
