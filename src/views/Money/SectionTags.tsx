@@ -1,8 +1,11 @@
 import styled from "styled-components";
-import React from "react";
-import Icon from  '../../components/Icon'
+import React, {useCallback, useState} from "react";
+import Icon from '../../components/Icon';
 import {useTags} from "../../hooks/useTags";
 import Variables from '../../variables';
+import {InputItem} from '../../components/InputItem';
+import {X} from '../../components/X';
+import {createMessage} from 'lib/createMessage';
 
 const Wrapper = styled.section`
   background: #fff;
@@ -20,7 +23,7 @@ const Wrapper = styled.section`
     > li {
       background: #fff;
       color: ${Variables.$lightGrey};
-      box-shadow: 0 1px 4px rgba(0,0,0,.1);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
       display: inline-block;
       border-radius: 16px;
       padding: 6px 16px;
@@ -33,18 +36,35 @@ const Wrapper = styled.section`
     }
   }
 
-  button {
+  button.add {
     background: #fff;
     border: none;
     border-radius: 16px;
     padding: 4px 10px;
     color: ${Variables.$blue};
     margin: 10px auto 0;
+
     .icon {
       fill: ${Variables.$blue};
       height: 14px;
       width: 14px;
       margin-right: 2px;
+    }
+  }
+`;
+const InputItemWrapper = styled.div`
+  .input-wrapper {
+    input {
+      padding: 0 10px;
+      border: 1px solid ${Variables.$lightGrey};
+
+      &:focus {
+        border: 1px solid ${Variables.$blue};
+      }
+
+      &.error {
+        border: 1px solid ${Variables.$red};
+      }
     }
   }
 `;
@@ -54,6 +74,8 @@ type Props = {
 }
 const SectionTags: React.FC<Props> = (props) => {
   const {tags, addTag} = useTags();
+  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   const selectedTagIds = props.value;
   const onToggleTag = (tagId: number) => {
     let index = selectedTagIds.indexOf(tagId);
@@ -65,6 +87,30 @@ const SectionTags: React.FC<Props> = (props) => {
       props.onChange([...selectedTagIds, tagId]);
     }
   };
+  const initModal = () => {
+    setShowModal(false);
+    setInputValue('');
+  }
+  const findDuplicateTag = (tagName: string) => {
+    return tags.findIndex(tag => tag.name === tagName) > -1;
+  };
+  const onConfirm = useCallback(() => {
+    if (inputValue === '' || !inputValue) return;
+    if (findDuplicateTag(inputValue)) {
+      createMessage({type: 'error', content: '标签名已存在'})
+      return;
+    }
+    addTag(inputValue);
+    createMessage({type: 'check', content: '添加成功'})
+    initModal()
+  }, [inputValue]);
+  const onCancel = useCallback(() => {
+    initModal()
+  }, []);
+  const handleInputChange = useCallback((e) => {
+    const value = e.target.value.replace(/(^\s)|(\s*)/g, '');
+    setInputValue(value);
+  }, []);
   return (
     <Wrapper>
       <ul>
@@ -74,7 +120,19 @@ const SectionTags: React.FC<Props> = (props) => {
               key={tag.id}>{tag.name}</li>
         )}
       </ul>
-      <button onClick={addTag}><Icon name='add' />新增标签</button>
+      <button className='add' onClick={() => setShowModal(true)}><Icon name='add'/>新增标签</button>
+      <X visible={showModal}
+         onClose={onCancel}
+         onConfirm={onConfirm}
+         height='180px'
+         title='添加标签'>
+        <InputItemWrapper>
+          <InputItem
+            label='标签名称'
+            value={inputValue}
+            onChange={handleInputChange}/>
+        </InputItemWrapper>
+      </X>
     </Wrapper>
   );
 };

@@ -3,6 +3,7 @@ import {
   HashRouter as Router,
   Switch,
   Route,
+  useLocation
 } from "react-router-dom"
 import Tags from "./views/Tags"
 import Money from "./views/Money"

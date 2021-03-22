@@ -3,6 +3,7 @@ import Icon from 'components/Icon'
 
 const Mask = styled.div`
   position: absolute;
+  z-index: 999;
   top: 0;
   left: 0;
   height: 100vh;
@@ -25,7 +26,7 @@ const MainContent = styled.div<DivProps>`
   height: ${props => props.height ? props.height : '240px'};
   background: #fff;
   border-radius: 4px;
-  z-index: 1000;
+  z-index: 1001;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -44,7 +45,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
   flex: 1;
   font-size: 16px;
-  line-height: 44px;
+  line-height: 40px;
   padding: 0 16px;
 `
 const CloseWrapper = styled.div`
@@ -59,7 +60,7 @@ const Content = styled.div`
   flex: 1;
 `
 const Footer = styled.div`
-  padding: 4px 16px;
+  padding: 8px 16px;
   text-align: right;
   > button {
     margin-left: 8px;
@@ -72,7 +73,7 @@ const Button = styled.button<ButtonProps>`
   font-size: 16px;
   line-height: 16px;
   color: ${props => props.cancel ? '#333' : '#fff'};
-  padding: 10px 12px;
+  padding: 8px 12px;
   border: ${props => props.cancel ? '1px solid #ddd' : '1px solid #0170fe'};
   background: ${props => props.cancel ? '#fff' : '#0170fe'};
   border-radius: 4px;
@@ -83,13 +84,14 @@ type Props = {
   closable?: boolean,
   visible?: boolean,
   onClose?: () => void,
-  onConfirm?: () => void
+  onConfirm?: () => void,
+  [k: string]: any
 }
 
 const X: React.FC<Props> = (props) => {
   return (
     props.visible ? <>
-      <MainContent center>
+      <MainContent center width={props.width} height={props.height}>
         <Header>
           <Title>{props.title || 'Title'}</Title>
           {props.closable === true || props.closable === undefined ?
@@ -99,8 +101,8 @@ const X: React.FC<Props> = (props) => {
         </Header>
         <Content>{props.children}</Content>
         <Footer>
-          <Button onClick={props.onConfirm}>Confirm</Button>
-          <Button cancel onClick={props.onClose}>Cancel</Button>
+          <Button onClick={props.onConfirm}>确定</Button>
+          <Button cancel onClick={props.onClose}>取消</Button>
         </Footer>
       </MainContent>
       <Mask/>

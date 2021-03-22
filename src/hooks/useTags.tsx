@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {createId} from "../lib/create";
 import {useUpdate} from "./useUpdate";
+import {createMessage} from 'lib/createMessage';
 
 const useTags = () => {
   const [tags, setTags] = useState<{ id: number, name: string }[]>([]);
@@ -27,16 +28,13 @@ const useTags = () => {
   };
   const deleteTag = (id: number) => {
     setTags(tags.filter(tag => tag.id !== id));
-    window.alert('删除成功');
+    createMessage({type: 'check', content: '删除成功'})
   };
-  const addTag = () => {
-    let tagName = window.prompt('请输入新标签的名称');
-    if (tagName !== null) {
-      tagName = tagName.replace(/(^\s*)|(\s*$)/g, '');
-      if (tagName !== '') {
-        setTags([...tags, {id: createId(), name: tagName}]);
-      }
-    }
+  const addTag = (tagName: string) => {
+    tagName = tagName.replace(/(^\s*)|(\s*$)/g, '');
+    const index = tags.findIndex(tag => tag.name === tagName);
+    if (index > -1) return;
+    setTags([...tags, {id: createId(), name: tagName}]);
   };
   const getTagNames = (ids: number[]) => {
     let names: string[] = [];

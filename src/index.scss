@@ -47,3 +47,45 @@ button, input {
   align-items: center;
   justify-content: center;
 }
+
+/* messageBox */
+.message-box-wrapper {
+  position: fixed;
+  top: 10px;
+  z-index: 2000;
+  width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  .message-item {
+    padding: 10px 20px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    background: #fff;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+    .icon {
+      height: 20px;
+      width: 20px;
+      margin-right: 10px;
+    }
+    span {
+      display: inline-block;
+      padding-top: 2px;
+      flex: 1;
+    }
+    &.error {
+      color: $red;
+      .icon {
+        fill: $red
+      }
+    }
+    &.check {
+      color: $green;
+      .icon {
+        fill: $green;
+      }
+    }
+  }
+}

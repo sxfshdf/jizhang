@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useCallback, useState} from "react";
 import {useTags} from "hooks/useTags";
 import styled from "styled-components";
 import Icon from "../components/Icon";
@@ -8,6 +8,8 @@ import {CenterBox} from "components/CenterBox";
 import {InputItem} from 'components/InputItem'
 import Variables from '../variables';
 import {useUpdate} from '../hooks/useUpdate';
+import {X} from '../components/X';
+import {createMessage} from '../lib/createMessage';
 
 const TagList = styled.ul`
   font-size: 16px;
@@ -69,11 +71,13 @@ const Wrapper = styled.div`
       padding: 0 10px;
     }
   }
-  input {
-    border: 1px solid #f5f5f5;
-    padding: 0 10px;
-    border-radius: 4px;
-    height: 36px;
+  .input-wrapper {
+    input {
+      border: 1px solid #f5f5f5;
+      padding: 0 10px;
+      border-radius: 4px;
+      height: 36px;
+    }
   }
 `
 const IconWrapper = styled.div`
@@ -88,11 +92,29 @@ const IconWrapper = styled.div`
     fill: ${Variables.$red}
   }
 `
+const InputItemWrapper = styled.div`
+  .input-wrapper {
+    input {
+      padding: 0 10px;
+      border: 1px solid ${Variables.$lightGrey};
+
+      &:focus {
+        border: 1px solid ${Variables.$blue};
+      }
+
+      &.error {
+        border: 1px solid ${Variables.$red};
+      }
+    }
+  }
+`;
 
 function Tags() {
   const {tags, addTag, updateTag, deleteTag} = useTags();
   const [selectedId, setSelectedId] = useState<number|null>(null)
-  const [isEdit, setIsEdit] = useState<Boolean>(false)
+  const [isEdit, setIsEdit] = useState<Boolean>(true)
+  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   useUpdate(() => {
     if (selectedId !== null) {
       const input = document.getElementById(selectedId.toString()) as HTMLInputElement
@@ -112,6 +134,30 @@ function Tags() {
     setSelectedId(null)
     setIsEdit(false)
   }
+  const initModal = () => {
+    setShowModal(false);
+    setInputValue('');
+  }
+  const findDuplicateTag = (tagName: string) => {
+    return tags.findIndex(tag => tag.name === tagName) > -1;
+  };
+  const handleInputChange = useCallback((e) => {
+    const value = e.target.value.replace(/(^\s)|(\s*)/g, '');
+    setInputValue(value);
+  }, []);
+  const onConfirm = useCallback(() => {
+    if (inputValue === '' || !inputValue) return;
+    if (findDuplicateTag(inputValue)) {
+      createMessage({type: 'error', content: '标签名已存在'})
+      return;
+    }
+    addTag(inputValue);
+    createMessage({type: 'check', content: '添加成功'})
+    initModal()
+  }, [inputValue]);
+  const onCancel = useCallback(() => {
+    initModal()
+  }, []);
   return (
     <LayoutWrapper title='标签页'>
       <TagList>
@@ -142,10 +188,22 @@ function Tags() {
         )}
       </TagList>
       <CenterBox className='center-box'>
-        <Button onClick={addTag} className='button flex-center'>
+        <Button onClick={() => setShowModal(true)} className='button flex-center'>
           <Icon name='add' />
         </Button>
       </CenterBox>
+      <X visible={showModal}
+         onClose={onCancel}
+         onConfirm={onConfirm}
+         height='180px'
+         title='添加标签'>
+        <InputItemWrapper>
+          <InputItem
+            label='标签名称'
+            value={inputValue}
+            onChange={handleInputChange}/>
+        </InputItemWrapper>
+      </X>
     </LayoutWrapper>
   );
 }
