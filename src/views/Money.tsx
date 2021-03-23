@@ -6,6 +6,7 @@ import {SectionNote} from "./Money/SectionNote";
 import {SectionNumber} from "./Money/SectionNumber";
 import {CategorySelector} from "components/CategorySelect";
 import {useRecords} from "../hooks/useRecords";
+import {createMessage} from '../lib/createMessage';
 
 const MyLayout = styled(Layout)`
   display: flex;
@@ -33,18 +34,12 @@ function Money() {
       ...selected,
       ...obj
     });
-    // setSelected(state=> {
-    //   console.log(state, 'state')
-    //   return {
-    //     ...state,
-    //   }
-    // })
   };
   const addRecord = () => {
     const newSelected = {...selected, amount: parseFloat(selected.amount)};
     const check = addRecords(newSelected);
     if (check) {
-      window.alert('保存成功');
+      createMessage({type: 'check', content: '添加成功'})
       setSelected(defaultSelected);
     }
   };

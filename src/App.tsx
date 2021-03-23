@@ -2,8 +2,7 @@ import React from "react"
 import {
   HashRouter as Router,
   Switch,
-  Route,
-  useLocation
+  Route
 } from "react-router-dom"
 import Tags from "./views/Tags"
 import Money from "./views/Money"

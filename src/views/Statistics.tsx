@@ -3,11 +3,14 @@ import React from "react";
 import styled from "styled-components";
 import {useTags} from "../hooks/useTags";
 import {RecordItem, useRecords} from "../hooks/useRecords";
+import {Button} from '../components/Button';
+import Icon from 'components/Icon'
 import day from 'dayjs';
 import Variables from '../variables';
+import {NavLink} from 'react-router-dom';
+import {EmptyInfo} from '../components/EmptyInfo';
 
 const LayoutList = styled(Layout)`
-
 `;
 const Item = styled.div`
   background: #fff;
@@ -21,7 +24,7 @@ const Item = styled.div`
 
   .date-wrapper {
     font-size: 18px;
-    //color: ${Variables.$darkGrey};
+      //color: ${Variables.$darkGrey};
     border-right: 1px solid #f5f5f5;
     padding: 8px;
     height: 62px;
@@ -59,11 +62,14 @@ const Item = styled.div`
     background: #f5f5f5;
     display: flex;
     padding-right: 8px;
+
     .bg {
       width: 110px;
     }
+
     ul {
       flex: 1;
+
       li {
         position: relative;
         margin: 8px 0;
@@ -128,6 +134,17 @@ const Item = styled.div`
     }
   }
 `;
+const EmptyWrapper = styled.div`
+  height: 100%;
+  .nav {
+    display: block;
+    margin: 40px auto;
+    padding: 12px 20px;
+    border-radius: 4px;
+    background: ${Variables.$blue};
+    color: #fff;
+  }
+`;
 
 function Statistics() {
   const {getTagNames} = useTags();
@@ -156,50 +173,57 @@ function Statistics() {
   };
   return (
     <LayoutList title='统计'>
-      {groupRecords && groupRecords.map((r, index) => {
-        return (
-          <Item key={index}>
-            <header>
-              <div className="date-wrapper flex-center">
-                <div className="date">{r[0]}</div>
-              </div>
-              <div className="amount-wrapper">
-                <div className="amount">
-                  <div className="category">收入(元）</div>
-                  <div className="total">{calcAmount(r[1])[0]}</div>
+      {groupRecords && groupRecords.length ?
+        groupRecords.map((r, index) => {
+          return (
+            <Item key={index}>
+              <header>
+                <div className="date-wrapper flex-center">
+                  <div className="date">{r[0]}</div>
                 </div>
-                <div className="amount">
-                  <div className="category">支出(元)</div>
-                  <div className="total">{calcAmount(r[1])[1]}</div>
+                <div className="amount-wrapper">
+                  <div className="amount">
+                    <div className="category">收入(元）</div>
+                    <div className="total">{calcAmount(r[1])[0]}</div>
+                  </div>
+                  <div className="amount">
+                    <div className="category">支出(元)</div>
+                    <div className="total">{calcAmount(r[1])[1]}</div>
+                  </div>
                 </div>
-              </div>
-            </header>
-            <div className="record-wrapper">
-              <div className="bg"></div>
-              <ul>
-                {r[1].map(item => {
-                  return <li key={item.createAt}>
-                    <div
-                      className={item.category === '-' ? 'category flex-center out' : 'category flex-center in'}>{item.category}</div>
-                    <section className="content">
-                      <div className="tags">{getTagNames(item.tagIds)}</div>
-                      <div className={item.category === '-' ? 'out' : 'in'}>
-                        {item.category === '-' ? `-${item.amount}` : `+${item.amount}`}
-                      </div>
-                    </section>
-                    {item.note === '' || item.note === undefined ? null : (
-                      <section className="note">
-                        <div className="noteContent">{item.note}</div>
+              </header>
+              <div className="record-wrapper">
+                <div className="bg"></div>
+                <ul>
+                  {r[1].map(item => {
+                    return <li key={item.createAt}>
+                      <div
+                        className={item.category === '-' ? 'category flex-center out' : 'category flex-center in'}>{item.category}</div>
+                      <section className="content">
+                        <div className="tags">{getTagNames(item.tagIds)}</div>
+                        <div className={item.category === '-' ? 'out' : 'in'}>
+                          {item.category === '-' ? `-${item.amount}` : `+${item.amount}`}
+                        </div>
                       </section>
-                    )}
-                  </li>;
-                })}
-              </ul>
-            </div>
-
-          </Item>
-        );
-      })}
+                      {item.note === '' || item.note === undefined ? null : (
+                        <section className="note">
+                          <div className="noteContent">{item.note}</div>
+                        </section>
+                      )}
+                    </li>;
+                  })}
+                </ul>
+              </div>
+            </Item>
+          );
+        }) :
+        <EmptyWrapper className='flex-center'>
+          <EmptyInfo message='暂无记录' icon='empty'>
+            <NavLink to="/money" className='nav'>
+              去添加
+            </NavLink>
+          </EmptyInfo>
+        </EmptyWrapper>}
     </LayoutList>
   );
 }

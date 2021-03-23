@@ -90,22 +90,22 @@ const SectionTags: React.FC<Props> = (props) => {
   const initModal = () => {
     setShowModal(false);
     setInputValue('');
-  }
+  };
   const findDuplicateTag = (tagName: string) => {
     return tags.findIndex(tag => tag.name === tagName) > -1;
   };
-  const onConfirm = useCallback(() => {
+  const onConfirm = () => {
     if (inputValue === '' || !inputValue) return;
     if (findDuplicateTag(inputValue)) {
-      createMessage({type: 'error', content: '标签名已存在'})
+      createMessage({type: 'error', content: '标签名已存在'});
       return;
     }
     addTag(inputValue);
-    createMessage({type: 'check', content: '添加成功'})
-    initModal()
-  }, [inputValue]);
+    createMessage({type: 'check', content: '添加成功'});
+    initModal();
+  };
   const onCancel = useCallback(() => {
-    initModal()
+    initModal();
   }, []);
   const handleInputChange = useCallback((e) => {
     const value = e.target.value.replace(/(^\s)|(\s*)/g, '');

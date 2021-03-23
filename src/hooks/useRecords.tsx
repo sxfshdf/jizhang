@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react"
 import {useUpdate} from "./useUpdate"
+import {createMessage} from '../lib/createMessage';
 
 type NewRecordItem = {
   tagIds: number[],
@@ -25,11 +26,11 @@ const useRecords = () => {
 
   const addRecords = (record: NewRecordItem) => {
     if (record.tagIds.length === 0) {
-      window.alert('请选择标签')
+      createMessage({type: 'error', content: '请选择标签'})
       return false
     }
     if (record.amount === 0) {
-      window.alert('请输入正确的金额')
+      createMessage({type: 'error', content: '请输入正确的金额'})
       return false
     }
     const newRecord = {...record, createAt: new Date().toISOString()}
