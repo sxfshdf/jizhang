@@ -40,7 +40,8 @@ const TagList = styled.ul`
 
 const LayoutWrapper = styled(Layout)`
   background: #fff;
-
+  display: flex;
+  flex-direction: column;
   .center-box {
     margin: 0;
     padding: 12px 0;
@@ -119,7 +120,7 @@ const InputItemWrapper = styled.div`
   }
 `;
 const EmptyWrapper = styled.div`
-  height: calc(100% - 64px);
+  flex: 1;
 `
 
 function Tags() {
