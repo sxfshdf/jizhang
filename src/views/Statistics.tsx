@@ -3,8 +3,6 @@ import React from "react";
 import styled from "styled-components";
 import {useTags} from "../hooks/useTags";
 import {RecordItem, useRecords} from "../hooks/useRecords";
-import {Button} from '../components/Button';
-import Icon from 'components/Icon'
 import day from 'dayjs';
 import Variables from '../variables';
 import {NavLink} from 'react-router-dom';
@@ -135,7 +133,8 @@ const Item = styled.div`
   }
 `;
 const EmptyWrapper = styled.div`
-  height: 100%;
+  //height: 100%;
+  margin-top: 80px;
   .nav {
     display: block;
     margin: 40px auto;
