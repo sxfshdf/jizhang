@@ -16,8 +16,8 @@ const TagList = styled.ul`
   font-size: 16px;
   background: #fff;
   overflow: auto;
-  height: calc(100% - 64px);
-
+  min-height: calc(100% - 64px);
+  flex: 1;
   > li {
     border-bottom: 2px solid #f5f5f5;
     display: flex;
